@@ -20,7 +20,7 @@ The benefit of this is that it is really fast and simple. The drawback of this i
 Over OSC you can send **messages** which contain a specific **address**. This address will be recognized by a client and will cause it to do something. As an addition it is also possible to send data within the message to for examples update a parameter.
 
 ![OSC Architecture](images/osc_architecture.png)
-*OSC Architecture*
+*Simplified OSC Architecture*
 
 #### OSC Bundles
 To put multiple messages together it is also possible to create so called **bundles**. These contain a list of OSC messages which then will be sent over the network.
@@ -44,14 +44,46 @@ To use OSC it is recommended to use a library which covers the basic OSC methods
 
 ### Overview
 
+![MadMapper OSC API Architecture](images/mm_architecture.png)
+*MadMapper OSC API Architecture*
+
 ### getControls
+The Method `getControls` is to receive the available controls from MadMapper.
+
+```
+/getControls?root=ROOT_URL&recursive=RECURSIVE
+```
+
+#### Parameters 
+* `ROOT_URL` (*String*): The node from where to search for other controls. 
+* `RECURSIVE` (*Boolean*): Defines if MadMapper should send only the direct children of the `ROOT_URL` control, or if it should send back all controls below this control. Value: **0 or 1**
+
+#### Response
+MadMapper replies with a bundle which contains a message for each child of the requested node on the address of the node.
+
+#### Example
+If there is one surface in MadMapper called "Quad 1" and you send a message to following address, MadMapper sends back a bundle with two messages without data on this addresses.
+
+**Request**
+
+```
+/getControls?root=/surfaces&recursive=0
+```
+
+**Response**
+
+```
+/surfaces/selected
+/surfaces/Quad 1
+```
 
 ### getControlValues
+
 
 #### Coordinate System
 
 ## Examples
-All the basic exampels are written in [processing][5] to show the general idea behind it. They should be easaly be portable to other languages.
+All the basic exampels are written in [processing][5] to show the general idea behind it. They should be easaly be portable to other languages and just give an idea how the API works.
 
 ### First Steps
 
@@ -60,10 +92,10 @@ All the basic exampels are written in [processing][5] to show the general idea b
 ### Receive Data from MadMapper
 
 ## Issues
-
+Currently the API is very young so there may be some bugs. If you find one please open a new issue and describe it as good as possible and how to reproduce it.
 
 ## Contribute
-
+If you would like to share your api project or extend an example or framework please create a pull request or just create a new issue.
 
 ## About
 
