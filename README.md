@@ -1,8 +1,8 @@
-![MadMapper OSC API Logo](images/api_logo_small.png)
+![MadMapper OSC API Logo](http://www.madmapper.com/wordpress/wp-content/uploads/2015/07/MMbanner2-1000x250.jpg)
 # MadMapper OSC API
-This is a documentation and example respsitory for the [MadMapper][1] OSC API which was released with the version **2.2** in December 2015.
+This is a documentation and example respsitory for the [MadMapper][1] OSC API which was released with the [version **2.2**][19] in December 2015.
 
-The goal of this repository is to gather examples and documentations for the api together to give other developers a quick start and and overview over the api.
+The goal of this repository is to gather examples and documentations for the api to give other developers a quick start and and overview over the api.
 
 ## Quickstart
 At the moment the API does just provide to read controls (e.g. Surfaces) from MadMapper and their values.
@@ -287,3 +287,4 @@ This repository is currently maintained by [Florian 'cansik' Bruggisser][7].
  [16]: examples/processing/receive_surfaces/receive_surfaces.pde
  [17]: examples/processing/set_value_of_surface/set_value_of_surface.pde
  [18]: examples/processing/receive_value_of_surface/receive_value_of_surface.pde
+ [19]: http://www.madmapper.com/download/Release_Note_History_Madmapper.txt
