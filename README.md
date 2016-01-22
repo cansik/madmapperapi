@@ -1,8 +1,8 @@
 ![MadMapper OSC API Logo](http://www.madmapper.com/wordpress/wp-content/uploads/2015/07/MMbanner2-1000x250.jpg)
 # MadMapper OSC API
-This is a documentation and example respsitory for the [MadMapper][1] OSC API which was released with the [version **2.2**][19] in December 2015.
+This is just a documentation and example respsitory for the [MadMapper][1] OSC API which was released with the version [**2.2**][19] in December 2015.
 
-The goal of this repository is to gather examples and documentations for the api to give other developers a quick start and and overview over the api.
+The goal of this repository is to gather examples and documentations for the api to give other developers a quick start and and overview over the possibilities.
 
 ## Quickstart
 At the moment the API does just provide to read controls (e.g. Surfaces) from MadMapper and their values.
@@ -17,17 +17,17 @@ To simply start communicating with MadMapper you have to
 The MadMapper OSC API uses OSC to send and receive messages. So it is useful to understand OSC and it's possibilities.
 
 ### OSC
-[OSC][4] is a simple [UDP][6] based network protocol between a server and multiple clients. UDP gives you the ability to just send data and don't care about, if the client is listening or not or how many client's are listening to your message. 
+[OSC][4] is a simple [UDP][6] based network protocol between a server and multiple clients. UDP gives you the ability to just send data and don't care about, if the client is listening or how many client's are listening to your message. 
 
-The benefit of this is that it is really fast and simple. The drawback of this is that if you want to create a bidirectional channel between your software and and antoher, you have to open a server and a client on each side.
+The benefit of this is that it is really fast and simple. The drawback of this is that if you want to create a bidirectional channel between your software and and antoher, you have to open a server and a client on both sides.
 
-Over OSC you can send **messages** which contain a specific **address**. This address will be recognized by a client and will cause it to do something. As an addition it is also possible to send data within the message to for examples update a parameter.
+Over OSC you can send **messages** which contain a specific **address**. This address will be recognized by a client and will cause it to do something. As an addition it is also possible to send data within the message, for example, to update a parameter.
 
 ![OSC Architecture](images/osc_architecture.png)
-*Simplified OSC Architecture*
+*Simplified OSC architecture*
 
 #### OSC Bundles
-To put multiple messages together it is also possible to create so called **bundles**. These contain a list of OSC messages which then will be sent over the network.
+To combine multiple messages together it is also possible to create so called **bundles**. These contain a list of OSC messages which then will be sent over the network.
 So a client is able to get messages which are related to each other as a bundle.
 
 #### OSC Libraries
@@ -47,16 +47,16 @@ To use OSC it is recommended to use a library which covers the basic OSC methods
 ## API Documentation
 
 ### Overview
-Because the API is built on top of the OSC interface MadMapper creates two OSC channels. One is just for sending data from the client to MadMapper and the other one is for the opposite direction.
+Because the API is built on top of the OSC interface, MadMapper creates two OSC channels. One is just for sending data from the client to MadMapper and the other one is for the opposite direction.
 
 For example if processing should talk with MadMapper you have to create a new OSC client which maps to the input port of MadMapper and a new OSC server which listenes on the feedback port of MadMapper. The input and feedback port can be changed in the MadMapper preferences.
 
 ![MadMapper OSC API Architecture](images/mm_architecture.png)
-*MadMapper OSC API Architecture*
+*MadMapper OSC API architecture*
 
-Now the communication is very simple, you just have to send MadMapper message from your client, and MadMapper will return you a bundle of messages on the other channel. So it is possible to have a bidirectional communication.
+Now the communication is very simple, you just have to send MadMapper a message from your client and MadMapper will return you a bundle of messages on the other channel. So it is possible to have a bidirectional communication.
 
-The drawback of this is that you don't have any information about, what **response** matches to which **request**. This could be solved by using an sequence number like in TCP.
+The drawback of this is that you don't have any information about, what **response** matches to which **request**. This could be solved by using an sequence number like in TCP but is currently a open issue.
 
 ### Method getControls
 Use the Method `getControls` to receive the available controls from MadMapper.
@@ -67,7 +67,7 @@ Use the Method `getControls` to receive the available controls from MadMapper.
 
 #### Parameters 
 * `ROOT_URL` (*String*): The node from where to search for other controls.
-* `RECURSIVE` (*Boolean*): Defines if MadMapper should send only the direct children of the `ROOT_URL` control, or if it should send back all controls below this control. Value: **0 or 1**
+* `RECURSIVE` (*Boolean*): Defines if MadMapper should send only the direct children of the `ROOT_URL` control, or if it should send back all controls below this control. Possible values: **0 or 1**
 
 #### Response
 MadMapper replies with a bundle which contains a message for each child of the requested node on the address of the node.
@@ -94,11 +94,11 @@ Use `getControlValues` to receive the values of the controls from MadMapper.
 ```
 
 #### Parameters
-* `URL_PATTERN` (*String*): The url pattern of the Controls we are looking for, as a regular expression. A simple example is just the URL of a control `/surfaces/Quad 1/opacity`, but we might ask all controls of a surface using `/surfaces/Quad 1/.*` 
-* `NORMALIZED` (*Boolean*): Defines if you want to receive the normalised value (FLOAT 0.0-1.0) or the value as it is (FLOAT, INT, BOOL, STRING, RGBA). *Remark*: RGBA and STRING values cannot be normalised, so MadMapper won’t send a reply for such addresses if normalised value is requested. Value: **0 or 1**
+* `URL_PATTERN` (*String*): The url pattern of the Controls we are looking for, as a [regular expression][20]. A simple example is just the URL of a control `/surfaces/Quad 1/opacity`, but we might ask all controls of a surface using `/surfaces/Quad 1/.*` 
+* `NORMALIZED` (*Boolean*): Defines if you want to receive the normalised value (FLOAT 0.0-1.0) or the value as it is (FLOAT, INT, BOOL, STRING, RGBA). *Remark*: RGBA and STRING values cannot be normalised, so MadMapper won’t send a reply for such addresses if normalised value is requested. Possible values: **0 or 1**
 
 #### Response
-MadMapper responds with a bundle that contains a message for each control that matches the URL_PATTERN, the address of the message is the address of the control and the value of the message is the current value of this control.
+MadMapper replies with a bundle that contains a message for each control that matches the URL_PATTERN, the address of the message is the address of the control and the value of the message is the current value of this control.
 
 #### Example
 If there is one surface in MadMapper called "Quad 1" and you send a message to following address,
@@ -121,14 +121,25 @@ MadMapper responds with a bundle that contains eight messages with one **float**
 ```
 
 #### Coordinate System
+MadMapper uses a normal [cartesian coordinate system][21] which has the center at `(0,0)`. A lot of UI frameworks start at the `(0, 0)` coordinates and the have the center at `(width/2, height/2)`. So you may have to transform the coordinates you receive from MadMapper to your own coordinate system.
+
+![MadMapper coordinate system](images/coordinate_system.png)
+*MadMapper coordinate system*
+
+For example for processing you have to use following transformation functions:
+
+```java
+f(x) = x * (width/2) + (width/2)
+f(y) = -1 * y * (height/2) + (height/2)
+``` 
 
 ## Examples
-All the basic exampels are written in [processing][5] to show the general idea behind it. They should be easaly be portable to other languages and just give an idea how the API works.
+All the basic exampels are written in [processing][5] to show the general idea on how to use the API. They should all be easily portable to other languages and just give an idea how the API works.
 
-For all examples we used a default MadMapper with one add surface called **Quad 1**.
+For all examples we used a default MadMapper with one added surface called **Quad 1**.
 
 ### Setup OSC
-First of all you have to install the OSC library for processing. For the examples we use [oscp5][12] which is developed by Andreas Schlegel. We recommend to use the latest version from github and not the one from processing library.
+First of all you have to install the OSC library for processing. For the examples we use [oscp5][12] which is developed by Andreas Schlegel. We recommend to use the latest version from github and not the one from the processing library.
 
 Now we need to import the namespaces for the OSC and network classes and create two new variables to store the client and the server.
 
@@ -152,7 +163,7 @@ void setup()
 }
 ```
 
-To receive data from MadMapper we have to create two methods which will be mapped used from the `OscP5`. One is to receive OSC messages and the other one to receive OSC bundles. And to make the sketch complete you should add a `draw` method.
+To receive data from MadMapper we have to create two methods which will be used from the `OscP5`. One is to receive OSC messages and the other one to receive OSC bundles. And to make the sketch complete you should add a `draw` method.
 
 ```java
 void draw() {}
@@ -163,7 +174,7 @@ void oscEvent(OscMessage msg) {}
 [Full Source Code][15]
 
 ### Receive surfaces
-After setting up the OSC client we now would like to know which surfaces are currently added to MadMapper. So we need the `getControls` Method to get a list of all available controls.
+After setting up the OSC client we now would like to know which surfaces are currently added to MadMapper. So we need the `getControls` method to get a list of all available controls.
 
 To send something to MadMapper the `osc` object has to be ready. To ensure that we wait a bit before we use it, we're sending the OSC message when we press a key.
 
@@ -215,7 +226,7 @@ void keyPressed()
 }
 ```
 
-MadMapper won't respond to this message because it just has to set it.
+MadMapper won't respond to this message because it just sets the value.
 
 [Full Source Code][17]
 
@@ -260,6 +271,9 @@ In the folder [examples][14] there are all examples in full length sorted by the
 ## Issues
 Currently the API is very young so there may be some bugs. If you find one please open a new issue and describe it as good as possible and how to reproduce it.
 
+### Concurrency
+There are a lot of concurrency problems which can occour because the protocol is asynchronious. Just keep this in mind till there is a client which handles these problems.
+
 ## Contribute
 If you would like to share your api project or extend an example or framework please create a pull request or just create a new issue.
 
@@ -288,3 +302,5 @@ This repository is currently maintained by [Florian 'cansik' Bruggisser][7].
  [17]: examples/processing/set_value_of_surface/set_value_of_surface.pde
  [18]: examples/processing/receive_value_of_surface/receive_value_of_surface.pde
  [19]: http://www.madmapper.com/download/Release_Note_History_Madmapper.txt
+ [20]: https://en.wikipedia.org/wiki/Regular_expression
+ [21]: https://en.wikipedia.org/wiki/Cartesian_coordinate_system
