@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProjectGuid>{61B82C02-44FD-45AE-96A9-A8CB6D644B56}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>MMApiExamples</RootNamespace>
+    <AssemblyName>MMApiExamples</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
+    <ConsolePause>false</ConsolePause>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <DebugType>full</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Externalconsole>true</Externalconsole>
+    <PlatformTarget>x86</PlatformTarget>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="VVVV\Color\RGBAColor.cs" />
+    <Compile Include="VVVV\Color\VColor.cs" />
+    <Compile Include="VVVV\Math\Matrix2x2.cs" />
+    <Compile Include="VVVV\Math\Matrix4x4.cs" />
+    <Compile Include="VVVV\Math\Tweener.cs" />
+    <Compile Include="VVVV\Math\VMath.cs" />
+    <Compile Include="VVVV\Math\Vector2D.cs" />
+    <Compile Include="VVVV\Math\Vector3D.cs" />
+    <Compile Include="VVVV\Math\Vector4D.cs" />
+    <Compile Include="VVVV\OSC\OSCBundle.cs" />
+    <Compile Include="VVVV\OSC\OSCMessage.cs" />
+    <Compile Include="VVVV\OSC\OSCPacket.cs" />
+    <Compile Include="VVVV\OSC\OSCReceiver.cs" />
+    <Compile Include="VVVV\OSC\OSCTimeTag.cs" />
+    <Compile Include="VVVV\OSC\OSCTransmitter.cs" />
+    <Compile Include="MadMapperCommunicator.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+</Project>

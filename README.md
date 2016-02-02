@@ -17,7 +17,7 @@ To simply start communicating with MadMapper you have to
 The MadMapper OSC API uses OSC to send and receive messages. So it is useful to understand OSC and it's possibilities.
 
 ### OSC
-[OSC][4] is a simple [UDP][6] based network protocol between a server and multiple clients. UDP gives you the ability to just send data and don't care about, if the client is listening or how many client's are listening to your message. 
+[OSC][4] is a simple [UDP][6] based network protocol between a server and multiple clients. UDP gives you the ability to just send data and don't care about, if the client is listening or how many client's are listening to your message.
 
 The benefit of this is that it is really fast and simple. The drawback of this is that if you want to create a bidirectional channel between your software and and antoher, you have to open a server and a client on both sides.
 
@@ -65,7 +65,7 @@ Use the Method `getControls` to receive the available controls from MadMapper.
 /getControls?root=ROOT_URL&recursive=RECURSIVE
 ```
 
-#### Parameters 
+#### Parameters
 * `ROOT_URL` (*String*): The node from where to search for other controls.
 * `RECURSIVE` (*Boolean*): Defines if MadMapper should send only the direct children of the `ROOT_URL` control, or if it should send back all controls below this control. Possible values: **0 or 1**
 
@@ -94,7 +94,7 @@ Use `getControlValues` to receive the values of the controls from MadMapper.
 ```
 
 #### Parameters
-* `URL_PATTERN` (*String*): The url pattern of the Controls we are looking for, as a [regular expression][20]. A simple example is just the URL of a control `/surfaces/Quad 1/opacity`, but we might ask all controls of a surface using `/surfaces/Quad 1/.*` 
+* `URL_PATTERN` (*String*): The url pattern of the Controls we are looking for, as a [regular expression][20]. A simple example is just the URL of a control `/surfaces/Quad 1/opacity`, but we might ask all controls of a surface using `/surfaces/Quad 1/.*`
 * `NORMALIZED` (*Boolean*): Defines if you want to receive the normalised value (FLOAT 0.0-1.0) or the value as it is (FLOAT, INT, BOOL, STRING, RGBA). *Remark*: RGBA and STRING values cannot be normalised, so MadMapper won’t send a reply for such addresses if normalised value is requested. Possible values: **0 or 1**
 
 #### Response
@@ -110,13 +110,13 @@ If there is one surface in MadMapper called "Quad 1" and you send a message to f
 MadMapper responds with a bundle that contains eight messages with one **float** value.
 
 ```
-/surfaces/Quad 1/handles/0/x 0.5 
-/surfaces/Quad 1/handles/0/y 0.5 
-/surfaces/Quad 1/handles/1/x 0.5 
-/surfaces/Quad 1/handles/1/y 0.5 
-/surfaces/Quad 1/handles/2/x 0.5 
-/surfaces/Quad 1/handles/2/y 0.5 
-/surfaces/Quad 1/handles/3/x 0.5 
+/surfaces/Quad 1/handles/0/x 0.5
+/surfaces/Quad 1/handles/0/y 0.5
+/surfaces/Quad 1/handles/1/x 0.5
+/surfaces/Quad 1/handles/1/y 0.5
+/surfaces/Quad 1/handles/2/x 0.5
+/surfaces/Quad 1/handles/2/y 0.5
+/surfaces/Quad 1/handles/3/x 0.5
 /surfaces/Quad 1/handles/3/y 0.5
 ```
 
@@ -131,10 +131,12 @@ For example for processing you have to use following transformation functions:
 ```java
 f(x) = x * (width/2) + (width/2)
 f(y) = -1 * y * (height/2) + (height/2)
-``` 
+```
 
 ## Examples
-All the basic exampels are written in [processing][5] to show the general idea on how to use the API. They should all be easily portable to other languages and just give an idea how the API works.
+All the basic examples are written in [processing][5] to show the general idea on how to use the API. They should all be easily portable to other languages and just give an idea how the API works.
+
+If you are interested in .NET examples, check out [this solution][22].
 
 For all examples we used a default MadMapper with one added surface called **Quad 1**.
 
@@ -183,7 +185,7 @@ So in the `keypressed` method body we send an OSC message to MadMapper to reques
 ```java
 void keyPressed()
 {
-  osc.send(new OscMessage("/getControls?root=/surfaces&recursive=0"), madMapper); 
+  osc.send(new OscMessage("/getControls?root=/surfaces&recursive=0"), madMapper);
 }
 ```
 
@@ -210,7 +212,7 @@ bundle received!
 ### Set value of surface
 To set a value of a MadMapper control you just have to send an OSC message to it's address with the right parameter. What kind of addresses are available is documented in MadMapper under **Help => OSC Channel List**.
 
-In this example we are going to set the `visibility` of the `Quad 1` surface to `false`. To do this we have to send a message to the visible address of `Quad 1` which contains a boolean. 
+In this example we are going to set the `visibility` of the `Quad 1` surface to `false`. To do this we have to send a message to the visible address of `Quad 1` which contains a boolean.
 
 ```java
 void keyPressed()
@@ -304,3 +306,4 @@ This repository is currently maintained by [Florian 'cansik' Bruggisser][7].
  [19]: http://www.madmapper.com/download/Release_Note_History_Madmapper.txt
  [20]: https://en.wikipedia.org/wiki/Regular_expression
  [21]: https://en.wikipedia.org/wiki/Cartesian_coordinate_system
+ [22]: examples/dotnet/MMApiExamples/
