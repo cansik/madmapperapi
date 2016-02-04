@@ -2,7 +2,7 @@
 using VVVV.Utils.OSC;
 using System.Threading.Tasks;
 
-namespace MMApiExamples
+namespace MadMapper
 {
 	public class MadMapperCommunicator
 	{
@@ -64,6 +64,7 @@ namespace MMApiExamples
 		{
 			connected = false;
 			client.Close ();
+			server.Close ();
 		}
 
 		/// <summary>

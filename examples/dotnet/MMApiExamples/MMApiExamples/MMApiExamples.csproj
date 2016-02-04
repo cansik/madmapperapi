@@ -54,7 +54,13 @@
     <Compile Include="VVVV\OSC\OSCReceiver.cs" />
     <Compile Include="VVVV\OSC\OSCTimeTag.cs" />
     <Compile Include="VVVV\OSC\OSCTransmitter.cs" />
-    <Compile Include="MadMapperCommunicator.cs" />
+    <Compile Include="MadMapper\MadMapperCommunicator.cs" />
+    <Compile Include="MadMapper\MadMapperClient.cs" />
+    <Compile Include="MadMapper\MadMapperResult.cs" />
+    <Compile Include="MadMapper\OSCAddress.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <Folder Include="MadMapper\" />
+  </ItemGroup>
 </Project>

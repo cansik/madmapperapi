@@ -1,6 +1,7 @@
 ﻿using System;
 using VVVV.Utils.OSC;
 using System.Threading.Tasks;
+using MadMapper;
 
 namespace MMApiExamples
 {
@@ -35,18 +36,22 @@ namespace MMApiExamples
 			ReceiveValueFromSurface ();
 
 			// closes the connection to madmapper
+			System.Threading.Thread.Sleep (1000);
 			communicator.Close ();
+
+			System.Threading.Thread.Sleep (1000);
+
+			// use madmapper client
+			UseMadMapperClient ();
 		}
 
 		static void Communicator_PacketReceived (object sender, OSCPacket e)
 		{
-			var bundle = e as OSCBundle;
+			var msg = e as OSCMessage;
 		
-			if (bundle != null) {
-				foreach (OSCMessage m in bundle.Values) {
-					Console.Write (m.Address + " ");
-					Console.WriteLine (String.Join (", ", m.Values.ToArray ()));
-				}	
+			if (msg != null) {
+				Console.Write (msg.Address + " ");
+				Console.WriteLine (String.Join (", ", msg.Values.ToArray ()));
 			}
 		}
 
@@ -66,7 +71,7 @@ namespace MMApiExamples
 		static void SetValueOfSurface ()
 		{
 			var msg = new OSCMessage ("/surfaces/Quad 1/visible");
-			msg.Append (false);
+			msg.Append (0);
 			communicator.Send (msg);
 		}
 
@@ -76,7 +81,24 @@ namespace MMApiExamples
 		/// </summary>
 		static void ReceiveValueFromSurface ()
 		{
-			communicator.Send (new OSCMessage ("/getControlValues?url=/surfaces/Quad 1/visible&normalized=0"));
+			communicator.Send (new OSCMessage ("/getControlValues?url=/surfaces/Quad 1/visible&normalized=1"));
+		}
+
+		static async void UseMadMapperClient ()
+		{
+			var client = new MadMapperClient ("test", REMOTE_ADDRESS, REMOTE_PORT);
+			client.Connect (LOCAL_PORT);
+
+			// call a message with a return value
+			var messages = await client.Call (new OSCMessage ("/getControls?root=/surfaces&recursive=0"));
+
+			Console.WriteLine ("Messages: " + messages.Count);
+
+			foreach (var msg in messages) {
+				Console.WriteLine (msg.Address);
+			}
+
+			client.Close ();
 		}
 	}
 }
