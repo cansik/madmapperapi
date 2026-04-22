@@ -1,4 +1,5 @@
-![MadMapper OSC API Logo](http://www.madmapper.com/wordpress/wp-content/uploads/2015/07/MMbanner2-1000x250.jpg)
+⚠️ This documentation is deprecated. Please use [Vidvox/OSCQuery](https://github.com/Vidvox/OSCQueryProposal) ([#5](https://github.com/cansik/madmapperapi/issues/5)) instead.
+
 # MadMapper OSC API
 This is just a documentation and example respsitory for the [MadMapper][1] OSC API which was released with the version [**2.2**][19] in December 2015.
 
